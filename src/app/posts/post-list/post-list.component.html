@@ -1,9 +1,8 @@
 <mat-card>
-    <h1 *ngIf="!anyPost">No Post yet!</h1>
-    <button mat-raised-button (click)="clickOnButton()">Create Post</button>
-    <mat-expansion-panel *ngFor="let post of savePost">
+    <h1 *ngIf="posts.length === 0">No Post yet!</h1>
+    <mat-expansion-panel *ngFor="let post of posts">
         <mat-expansion-panel-header>
-            {{post.title}}
+            {{post.title}}---
         </mat-expansion-panel-header>
         <mat-panel-description>
             {{post.content}}

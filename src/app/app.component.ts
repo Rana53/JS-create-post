@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'js-create-post';
+  allPosts = [];
+  onPostAdded(post){
+    this.allPosts.push(post);
+  }
 }
