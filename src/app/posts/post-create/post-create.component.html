@@ -1,12 +1,12 @@
 <mat-card>
-    <form class="example-form">
+    <form class="example-form" (submit)="onAddPost(postForm)" #postForm="ngForm">
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="post title" [(ngModel)]="postTitle" name="name">
+            <input matInput placeholder="post title" ngModel name="title">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <textarea matInput placeholder="post content" [(ngModel)]="postContent" name="name"></textarea>
+            <textarea matInput placeholder="post content" ngModel="postContent" name="content"></textarea>
         </mat-form-field>
-        <button mat-raised-button (click)=" clickOnButton()">Save Post
+        <button mat-raised-button type="submit">Save Post
     </button>
     </form>
 </mat-card>
