@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Post } from './posts/post.model';
+import {PostService} from './posts/post.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,5 @@ import { Post } from './posts/post.model';
 })
 export class AppComponent {
   title = 'js-create-post';
-  allPosts : Post []= [];
-  onPostAdded(post){
-    this.allPosts.push(post);
-  }
+  
 }
