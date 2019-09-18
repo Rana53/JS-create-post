@@ -1,14 +1,17 @@
 import { Post} from '../posts/post.model';
+import { Subject } from 'rxjs';
 
 export class PostService {
     private allPosts: Post[] = [];
-    
+    private postUpdated = new Subject <Post[]> ();
     pushPost(post: Post){
         this.allPosts.push(post);
+        this.postUpdated.next([...this.allPosts]);
         console.log('One post push ' + this.allPosts.length);
+
     }
-    getPost(){
-        // we dont use return this.allPosts because its a reference type if we pass copy of the array return should be bellow
-        return [...this.allPosts];
+    getPostUpdateListener(){
+        return this.postUpdated.asObservable();
     }
+
 }

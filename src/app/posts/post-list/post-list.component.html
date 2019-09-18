@@ -1,11 +1,16 @@
-<mat-card>
-    <h1>No Post yet!</h1>
+<mat-accordion>
     <mat-expansion-panel *ngFor="let post of posts">
         <mat-expansion-panel-header>
-            {{post.title}}---
+            {{post.title}}
         </mat-expansion-panel-header>
         <mat-panel-description>
             {{post.content}}
         </mat-panel-description>
+        <mat-action-row>
+            <button mat-button color="primary">EDIT</button>
+        </mat-action-row>
+        <mat-action-row>
+            <button mat-button color="warn">DELETE</button>
+        </mat-action-row>
     </mat-expansion-panel>
-</mat-card>
+</mat-accordion>

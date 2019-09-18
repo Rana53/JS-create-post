@@ -13,7 +13,7 @@ export class PostCreateComponent{
     constructor(private postService: PostService){}
     postTitle = "";
     postContent = "";
-    
+
     onAddPost(form: NgForm){
         if(form.invalid) return ;
         const post: Post = {
@@ -21,6 +21,7 @@ export class PostCreateComponent{
             content: form.value.content
         }
         this.postService.pushPost(post);
+        form.resetForm();
     }
     
 }

@@ -5,7 +5,7 @@
             <mat-error *ngIf="title.invalid">Please enter a post title here</mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <textarea matInput placeholder="post content" ngModel="postContent" name="content" required #content="ngModel"></textarea>
+            <textarea matInput placeholder="post content" ngModel name="content" required #content="ngModel"></textarea>
             <mat-error *ngIf="content.invalid">Please enter post content here</mat-error>
         </mat-form-field>
         <button mat-raised-button type="submit">Save Post
