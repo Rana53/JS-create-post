@@ -10,9 +10,13 @@ export class PostService {
     constructor(private http: HttpClient){ }
 
     pushPost(post: Post){
-        this.allPosts.push(post);
-        this.postUpdated.next([...this.allPosts]);
-        console.log('One post push ' + this.allPosts.length);
+        this.http.post<{message: string}>('http://localhost:3000/api/posts',post)
+          .subscribe((message) => {
+                console.log(message);
+              this.allPosts.push(post);
+              this.postUpdated.next([...this.allPosts]);
+          });
+        
 
     }
     getPostUpdateListener(){
