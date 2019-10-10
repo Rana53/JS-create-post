@@ -16,8 +16,6 @@ export class PostService {
               this.allPosts.push(post);
               this.postUpdated.next([...this.allPosts]);
           });
-        
-
     }
     getPostUpdateListener(){
         return this.postUpdated.asObservable();
