@@ -3,17 +3,17 @@ const bodyParser = require("body-parser");
 const app = express();
 const Post = require('./models/post');
 const mongoose = require('mongoose');
-const url = 'mongodb+srv://tyro:ZRg3THFiaFJsFumr@cluster0-5qfbo.mongodb.net/test?retryWrites=true&w=majority';
+const url = 'mongodb+srv://tyro:tyro@cluster0-zqcah.mongodb.net/node-js-post?retryWrites=true&w=majority';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-mongoose.connect(url)
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true})
   .then(() =>{
     console.log('Database connected');
   })
 .catch(() =>{
-    console.log('Connection Failed error occur');
+    console.log('Connection Failed');
 });
 
 app.use((req, res, next) => {
@@ -33,7 +33,8 @@ app.post("/api/posts", (req, res, next) => {
         title: req.body.title,
         content: req.body.content
     });
-    console.log("Post successfully Data " + post);
+    post.save();
+    console.log("Post successfully,  Data " + post);
     res.status(201).json({
         message: 'Post added successfully'
     });
