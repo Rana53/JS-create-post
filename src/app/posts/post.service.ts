@@ -3,7 +3,6 @@ import { Post} from '../posts/post.model';
 import { HttpClient} from "@angular/common/http";
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { post } from 'selenium-webdriver/http';
 
 @Injectable({providedIn:'root'})
 export class PostService {
@@ -12,9 +11,10 @@ export class PostService {
     constructor(private http: HttpClient){ }
 
     pushPost(post: Post){
-        this.http.post<{message: string}>('http://localhost:3000/api/posts',post)
-          .subscribe((message) => {
-                console.log(message);
+        this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts',post)
+          .subscribe((responseData) => {
+              const id = responseData.postId;
+              post.id = id;
               this.allPosts.push(post);
               this.postUpdated.next([...this.allPosts]);
           });
