@@ -29,7 +29,8 @@ export class PostService {
                   return {
                       title: post.title,
                       content: post.content,
-                      id: post._id
+                      id: post._id 
+
                   }
               });
           }))
@@ -43,8 +44,9 @@ export class PostService {
     deletePost(postId: string){
         this.http.delete('http://localhost:3000/api/posts/' + postId)
         .subscribe(() =>{
-            console.log('Deleted');
-        });  
-        
+            const updatePost = this.allPosts.filter(post => post.id !== postId);
+            this.allPosts = updatePost;
+            this.postUpdated.next([...this.allPosts]);
+        });     
     }
-}
+}  
