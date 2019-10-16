@@ -23,8 +23,7 @@ export class PostCreateComponent implements OnInit{
                 this.mode = "edit";
                 this.postId = paramMap.get('postId');
                 this.post = this.postService.getPostForId(this.postId);
-                console.log(this.postId);
-                console.log("Has " + this.post.title + " Has " + this.post.id);
+                
             }
             else{
                 this.mode = 'create';
@@ -32,14 +31,23 @@ export class PostCreateComponent implements OnInit{
             }
         });
     }
-    onAddPost(form: NgForm){
+    onSavePost(form: NgForm){
         if(form.invalid) return ;
         const post: Post = {
             id: null,
             title: form.value.title,
             content: form.value.content
         }
-        this.postService.pushPost(post);
+        if(this.mode === 'create'){
+            console.log("post created successfully");
+            this.postService.addPost(post);
+        }
+        else{
+            post.id = this.postId;
+            console.log("post edit successfully");
+            //console.log("post edit successfully" + post.id + " " + post.title + " " + post.content);
+            this.postService.updatePost(post);
+        }
         form.resetForm();
     }
     

@@ -11,7 +11,7 @@ export class PostService {
     private postUpdated = new Subject <Post[]> ();
     constructor(private http: HttpClient){ }
 
-    pushPost(post: Post){
+    addPost(post: Post){
         this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts',post)
           .subscribe((responseData) => {
               const id = responseData.postId;
@@ -43,17 +43,12 @@ export class PostService {
     }
 
     getPostForId(id: string){
-        // var x = 0;
-        // for(var i = 0; i < this.allPosts.length; i++){
-        //     if(this.allPosts[i].id === id){
-        //         x = i;
-        //         break;
-        //     }
-        // }
-        // return {...this.allPosts[x]};
         return {...this.allPosts.find(post => post.id === id)};
     }
-
+    updatePost(post: Post){
+       this.http.put('http//localhost:3000/api/post/'+post.id , post)
+       .subscribe();
+    }
     deletePost(postId: string){
         this.http.delete('http://localhost:3000/api/posts/' + postId)
         .subscribe(() =>{
