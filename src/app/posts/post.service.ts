@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable({providedIn:'root'})
 export class PostService {
     private allPosts: Post[] = [];
+    post : Post;
     private postUpdated = new Subject <Post[]> ();
     constructor(private http: HttpClient){ }
 
@@ -39,6 +40,17 @@ export class PostService {
               this.postUpdated.next([...this.allPosts]);
           });
         //return [...this.allPosts];
+    }
+
+    getPostForId(id: string){
+        var x = 0;
+        for(var i = 0; i < this.allPosts.length; i++){
+            if(this.allPosts[i].id === id){
+                x = i;
+                break;
+            }
+        }
+        return {...this.allPosts[x]};
     }
 
     deletePost(postId: string){
