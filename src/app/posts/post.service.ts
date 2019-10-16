@@ -43,14 +43,15 @@ export class PostService {
     }
 
     getPostForId(id: string){
-        var x = 0;
-        for(var i = 0; i < this.allPosts.length; i++){
-            if(this.allPosts[i].id === id){
-                x = i;
-                break;
-            }
-        }
-        return {...this.allPosts[x]};
+        // var x = 0;
+        // for(var i = 0; i < this.allPosts.length; i++){
+        //     if(this.allPosts[i].id === id){
+        //         x = i;
+        //         break;
+        //     }
+        // }
+        // return {...this.allPosts[x]};
+        return {...this.allPosts.find(post => post.id === id)};
     }
 
     deletePost(postId: string){
