@@ -46,8 +46,8 @@ export class PostService {
         return {...this.allPosts.find(post => post.id === id)};
     }
     updatePost(post: Post){
-       this.http.put('http//localhost:3000/api/post/'+post.id , post)
-       .subscribe();
+       this.http.put('http://localhost:3000/api/posts/'+post.id , post)
+       .subscribe(response => console.log(response));
     }
     deletePost(postId: string){
         this.http.delete('http://localhost:3000/api/posts/' + postId)

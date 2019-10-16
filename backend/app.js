@@ -24,7 +24,7 @@ app.use((req, res, next) => {
     );
     res.setHeader(
         "Access-Control-Allow-Methods",
-        "GET, POST, PATCH, DELETE, OPTIONS"
+        "GET, POST,PUT, PATCH, DELETE, OPTIONS"
     );
     next();
 });
@@ -53,6 +53,17 @@ app.get("/api/posts", (req, res, next) => {
         console.log('Error occure to retrieve post data');
     });
     
+});
+app.put("/api/posts/:postId", (req, res, next) => {
+    const id = req.params.postId;
+    const post = new Post({
+        title: req.body.title,
+        content: req.body.content
+    });
+    Post.updateOne({ _id : id},post).then(result =>{
+        console.log(result);
+        res.status(201).json({ message: "post update successfully" });
+    })
 });
 
 app.delete("/api/posts/:postId", (req, res, next) => {
