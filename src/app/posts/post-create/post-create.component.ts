@@ -23,7 +23,7 @@ export class PostCreateComponent implements OnInit{
                 this.mode = "edit";
                 this.postId = paramMap.get('postId');
                 this.post = this.postService.getPostForId(this.postId);
-                
+
             }
             else{
                 this.mode = 'create';
@@ -45,10 +45,10 @@ export class PostCreateComponent implements OnInit{
         else{
             post.id = this.postId;
             console.log("post edit successfully");
-            //console.log("post edit successfully" + post.id + " " + post.title + " " + post.content);
+            // console.log("post edit successfully" + post.id + " " + post.title + " " + post.content);
             this.postService.updatePost(post);
         }
         form.resetForm();
     }
-    
+
 }

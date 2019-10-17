@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Post} from '../posts/post.model';
-import { HttpClient} from "@angular/common/http";
+import { HttpClient} from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@Injectable({providedIn:'root'})
+@Injectable({providedIn: 'root'})
 export class PostService {
     private allPosts: Post[] = [];
-    post : Post;
+    post: Post;
     private postUpdated = new Subject <Post[]> ();
-    constructor(private http: HttpClient){ }
+    constructor(private http: HttpClient) { }
 
-    addPost(post: Post){
+    addPost(post: Post) {
         this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts',post)
           .subscribe((responseData) => {
               const id = responseData.postId;
@@ -20,41 +20,42 @@ export class PostService {
               this.postUpdated.next([...this.allPosts]);
           });
     }
-    getPostUpdateListener(){
+    getPostUpdateListener() {
         return this.postUpdated.asObservable();
     }
-    getPosts(){
+    getPosts() {
         this.http.get<{message: string, posts: any}>('http://localhost:3000/api/posts')
-          .pipe(map((postData) =>{
+          .pipe(map((postData) => {
               return postData.posts.map((post) => {
                   return {
                       title: post.title,
                       content: post.content,
-                      id: post._id 
+                      id: post._id
 
-                  }
+                  };
               });
           }))
           .subscribe((transformedData) => {
-              this.allPosts = transformedData;   
+              this.allPosts = transformedData;
               this.postUpdated.next([...this.allPosts]);
           });
-        //return [...this.allPosts];
+        // return [...this.allPosts];
     }
 
-    getPostForId(id: string){
+    getPostForId(id: string) {
         return {...this.allPosts.find(post => post.id === id)};
     }
-    updatePost(post: Post){
+    updatePost(post: Post) {
        this.http.put('http://localhost:3000/api/posts/'+post.id , post)
        .subscribe(response => console.log(response));
     }
-    deletePost(postId: string){
+
+    deletePost(postId: string) {
         this.http.delete('http://localhost:3000/api/posts/' + postId)
-        .subscribe(() =>{
+        .subscribe(() => {
             const updatePost = this.allPosts.filter(post => post.id !== postId);
             this.allPosts = updatePost;
             this.postUpdated.next([...this.allPosts]);
-        });     
+        });
     }
-}  
+}

@@ -51,17 +51,18 @@ app.get("/api/posts", (req, res, next) => {
     })
     .catch(()=>{
         console.log('Error occure to retrieve post data');
-    });
+    }); 
     
 });
 app.put("/api/posts/:postId", (req, res, next) => {
     const id = req.params.postId;
     const post = new Post({
+        _id: id,
         title: req.body.title,
         content: req.body.content
     });
+    console.log(id);
     Post.updateOne({ _id : id},post).then(result =>{
-        console.log(result);
         res.status(201).json({ message: "post update successfully" });
     })
 });
@@ -75,4 +76,5 @@ app.delete("/api/posts/:postId", (req, res, next) => {
        res.status(201).json({ message: "post deleted!" });
     })
 });
+
 module.exports = app; 
