@@ -33,13 +33,13 @@ app.post("/api/posts", (req, res, next) => {
         title: req.body.title,
         content: req.body.content
     });
-    post.save().then(createdPost =>{ 
+    post.save().then(createdPost =>{
         res.status(201).json({
             message: 'Post added successfully',
             postId: createdPost._id
         });
     });
-    
+
 });
 app.get("/api/posts", (req, res, next) => {
     Post.find()
@@ -51,8 +51,19 @@ app.get("/api/posts", (req, res, next) => {
     })
     .catch(()=>{
         console.log('Error occure to retrieve post data');
-    }); 
-    
+    });
+
+});
+app.get("/api/posts/:id", (req, res, next) => {
+    const id = req.params.id;
+    Post.findById(id).then( post => {
+      if(post){
+        res.status(200).json(post);
+      }
+      else{
+        res.status(500).json({ message: "Post not found"});
+      }
+    });
 });
 app.put("/api/posts/:postId", (req, res, next) => {
     const id = req.params.postId;
@@ -77,4 +88,4 @@ app.delete("/api/posts/:postId", (req, res, next) => {
     })
 });
 
-module.exports = app; 
+module.exports = app;
