@@ -3,13 +3,14 @@ import { Post} from '../posts/post.model';
 import { HttpClient} from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class PostService {
     private allPosts: Post[] = [];
     post: Post;
     private postUpdated = new Subject <Post[]> ();
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     addPost(post: Post) {
         this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts', post)
@@ -18,6 +19,7 @@ export class PostService {
               post.id = id;
               this.allPosts.push(post);
               this.postUpdated.next([...this.allPosts]);
+              this.router.navigate["/"];
           });
     }
     getPostUpdateListener() {
@@ -38,7 +40,7 @@ export class PostService {
               this.allPosts = transformedData;
               this.postUpdated.next([...this.allPosts]);
           });
-        // return [...this.allPosts];
+         return [...this.allPosts];
     }
 
     getPostForId(id: string) {
@@ -52,6 +54,7 @@ export class PostService {
         updatedPost[oldPostIndex] = post;
         this.allPosts = updatedPost;
         this.postUpdated.next([...this.allPosts]);
+        this.router.navigate["/"];
        });
     }
 

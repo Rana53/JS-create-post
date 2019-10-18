@@ -3,6 +3,7 @@ import { Post } from '../post.model';
 import { NgForm } from '@angular/forms';
 import { PostService } from '../post.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MatSpinner } from '@angular/material';
 
 @Component({
     selector: 'app-post-create',
@@ -11,7 +12,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 
 export class PostCreateComponent implements OnInit{
-    constructor(private postService: PostService, public route: ActivatedRoute){}
+    constructor(private postService: PostService, public route: ActivatedRoute) {}
+    isLoading = false;
     postTitle = "";
     postContent = "";
     private post : Post;
@@ -22,8 +24,9 @@ export class PostCreateComponent implements OnInit{
             if (paramMap.has('postId')){
                 this.mode = "edit";
                 this.postId = paramMap.get('postId');
+                this.isLoading = true;
                 this.postService.getPostForId(this.postId).subscribe(postData => {
-                    // console.log(postData);
+                    this.isLoading = false;
                     this.post = { id: postData._id, title: postData.title, content: postData.content };
                 });
 
@@ -34,7 +37,8 @@ export class PostCreateComponent implements OnInit{
         });
     }
 
-    onSavePost(form: NgForm){
+    onSavePost(form: NgForm) {
+        this.isLoading = true;
         if(form.invalid) return;
         const post: Post = {
             id: null,
@@ -51,6 +55,7 @@ export class PostCreateComponent implements OnInit{
             // console.log("post edit successfully" + post.id + " " + post.title + " " + post.content);
             this.postService.updatePost(post);
         }
+        this.isLoading = false;
         form.resetForm();
     }
 
