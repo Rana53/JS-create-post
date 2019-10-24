@@ -11,7 +11,7 @@ import { MatSpinner } from '@angular/material';
     styleUrls: ['./post-create.component.css']
 })
 
-export class PostCreateComponent implements OnInit{
+export class PostCreateComponent implements OnInit {
     constructor(private postService: PostService, public route: ActivatedRoute) { }
     form: FormGroup;
     isLoading = false;
@@ -20,6 +20,7 @@ export class PostCreateComponent implements OnInit{
     private post: Post;
     private mode = 'create';
     private postId: string;
+    imagePreview: string;
     ngOnInit() {
         this.form = new FormGroup({
           title: new FormControl(null, {
@@ -27,7 +28,8 @@ export class PostCreateComponent implements OnInit{
           }),
           content: new FormControl(null, {
             validators: [Validators.required, ]
-          })
+          }),
+          image: new FormControl(null, { validators: [Validators.required]})
         });
         this.route.paramMap.subscribe((paramMap: ParamMap) => {
             if (paramMap.has('postId')) {
@@ -67,8 +69,7 @@ export class PostCreateComponent implements OnInit{
         if (this.mode === 'create') {
             console.log('post created successfully');
             this.postService.addPost(post);
-        }
-        else{
+        } else {
             post.id = this.postId;
             console.log('post edit successfully');
             // console.log("post edit successfully" + post.id + " " + post.title + " " + post.content);
@@ -77,6 +78,17 @@ export class PostCreateComponent implements OnInit{
         this.isLoading = false;
         this.form.reset();
     }
+    onImageChanged(event: Event) {
+      const file = (event.target as HTMLInputElement).files[0];
+      this.form.patchValue({ image: file});
+      this.form.get('image').updateValueAndValidity();
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview =  reader.result as string;
+      };
+      reader.readAsDataURL(file);
+      console.log(reader);
 
+    }
 }
 
