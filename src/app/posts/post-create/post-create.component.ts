@@ -45,7 +45,8 @@ export class PostCreateComponent implements OnInit {
                     this.post = {
                       id: postData._id,
                       title: postData.title,
-                      content: postData.content
+                      content: postData.content,
+                      imagePath: null
                     };
                     this.form.setValue({
                       title: this.post.title,
@@ -76,7 +77,8 @@ export class PostCreateComponent implements OnInit {
           const post: Post = {
             id: null,
             title: this.form.value.title,
-            content: this.form.value.content
+            content: this.form.value.content,
+            imagePath: null
           };
           post.id = this.postId;
           console.log('post edit successfully');
