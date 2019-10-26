@@ -12,11 +12,14 @@ export class PostService {
     private postUpdated = new Subject <Post[]> ();
     constructor(private http: HttpClient, private router: Router) { }
 
-    addPost(post: Post) {
-        this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts', post)
+    addPost(title: string, content: string, image: File) {
+      const postData = new FormData();
+      postData.append("title", title);
+      postData.append("content",content);
+      postData.append("image", image, title);
+      this.http.post<{message: string, postId: string}>('http://localhost:3000/api/posts', postData)
           .subscribe((responseData) => {
-              const id = responseData.postId;
-              post.id = id;
+              const post: Post = {id: responseData.postId, title: title, content: content}
               this.allPosts.push(post);
               this.postUpdated.next([...this.allPosts]);
               this.router.navigate["/"];

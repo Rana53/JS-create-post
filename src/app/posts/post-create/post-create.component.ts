@@ -61,23 +61,27 @@ export class PostCreateComponent implements OnInit {
     }
 
     onSavePost() {
-        this.isLoading = true;
         if (this.form.invalid) {
           return;
         }
-        const post: Post = {
+        this.isLoading = true;
+        if (this.mode === 'create') {
+            console.log('post created successfully');
+            this.postService.addPost(
+              this.form.value.title,
+              this.form.value.content,
+              this.form.value.image
+            );
+        } else {
+          const post: Post = {
             id: null,
             title: this.form.value.title,
             content: this.form.value.content
-        };
-        if (this.mode === 'create') {
-            console.log('post created successfully');
-            this.postService.addPost(post);
-        } else {
-            post.id = this.postId;
-            console.log('post edit successfully');
-            // console.log("post edit successfully" + post.id + " " + post.title + " " + post.content);
-            this.postService.updatePost(post);
+          };
+          post.id = this.postId;
+          console.log('post edit successfully');
+          // console.log("post edit successfully" + post.id + " " + post.title + " " + post.content);
+          this.postService.updatePost(post);
         }
         this.isLoading = false;
         this.form.reset();
