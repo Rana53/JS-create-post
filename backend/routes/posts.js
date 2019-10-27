@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const name = file.originalname.toLowerCase().split(' ').join('-');
     const ext = MIME_TYPE_MAP[file.mimetype];
-    console.log(name+'...'+ext);
+    //console.log(name+'...'+ext);
     cb(null, name + '-' + Date.now()+'.' + ext);
   }
 });
@@ -32,12 +32,16 @@ router.post("",multer({storage}).single('image'), (req, res, next) => {
       content: req.body.content,
       imagePath: url + "/images" + req.file.filename
   });
-  post.save().then(createdPost =>{
-      console.log(createdPost);
+  post.save().then(createdPost => {
+      console.log("create post " + createdPost);
       res.status(201).json({
           message: 'Post added successfully',
-          ...createdPost,
-          postId: createdPost._id
+          post: {
+            title: createdPost.title,
+            content: createdPost.content,
+            imagePath: createdPost.imagePath,
+            id: createdPost._id
+          }
       });
   });
 

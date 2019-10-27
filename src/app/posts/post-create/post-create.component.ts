@@ -62,9 +62,10 @@ export class PostCreateComponent implements OnInit {
     }
 
     onSavePost() {
-        if (this.form.invalid) {
-          return;
-        }
+        // if (this.form.invalid) {
+        //   console.log("dummy post");
+        //   return;
+        // }
         this.isLoading = true;
         if (this.mode === 'create') {
             console.log('post created successfully');
