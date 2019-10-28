@@ -8,9 +8,9 @@ import { PostService } from '../post.service';
     templateUrl: './post-list.component.html',
     styleUrls: ['./post-list.component.css'],
 })
-export class PostListComponent implements OnInit, OnDestroy{
+export class PostListComponent implements OnInit, OnDestroy {
     isLoading = false;
-    private postsSub : Subscription;
+    private postsSub: Subscription;
     posts: Post [] = [];
     constructor(private postService: PostService) { }
     ngOnInit() {
@@ -20,15 +20,15 @@ export class PostListComponent implements OnInit, OnDestroy{
       .subscribe((post: Post[]) => {
         this.isLoading = false;
         this.posts = post;
-        //console.log("post image path " )
+        // console.log("post image path ");
       });
     }
 
-    onDelete(postId: string){
+    onDelete(postId: string) {
         this.postService.deletePost(postId);
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this.postsSub.unsubscribe();
     }
 
