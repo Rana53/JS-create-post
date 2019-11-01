@@ -11,13 +11,15 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostService } from './posts/post.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatExpansionModule } from '@angular/material';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-
-
+import { 
+  MatToolbarModule, 
+  MatExpansionModule,
+  MatProgressSpinnerModule,
+  MatCardModule,
+  MatButtonModule,
+  MatInputModule,
+  MatPaginatorModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import {MatInputModule} from '@angular/material/input';
     MatInputModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
     HttpClientModule
   ],
   providers: [PostService],

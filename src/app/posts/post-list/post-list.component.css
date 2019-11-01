@@ -5,3 +5,7 @@ mat-spinner{
 .h3{
   text-align: center;
 }
+
+mat-paginator {
+  margin-top: 1rem;
+}
