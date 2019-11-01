@@ -50,8 +50,15 @@ router.post("",  multer({storage}).single('image'), (req, res, next) => {
 
 });
 router.get("", (req, res, next) => {
-  Post.find()
-  .then((doc) =>{
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const pageQuery = Post.find();
+  if (pageSize && currentPage){
+    pageQuery
+    .skip(pageSize * (currentPage - 1))
+    .limit(pageSize);
+  }
+  pageQuery.then((doc) =>{
     res.status(200).json({
       message: 'Post fatched successfully',
       posts: doc

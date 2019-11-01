@@ -8,19 +8,20 @@ import { PageEvent } from '@angular/material';
     selector: 'app-post-list',
     templateUrl: './post-list.component.html',
     styleUrls: ['./post-list.component.css'],
-})
+}) 
 export class PostListComponent implements OnInit, OnDestroy {
     posts: Post [] = [];
     isLoading = false;
     totalPosts = 10;
     postsPerPage = 2;
+    currentPage = 1;
     pageSizeOptions = [1, 2, 5, 10];
     private postsSub: Subscription;
 
     constructor(private postService: PostService) { }
     ngOnInit() {
       this.isLoading = true;
-      this.postService.getPosts();
+      this.postService.getPosts(this.postsPerPage,1);
       this.postsSub = this.postService.getPostUpdateListener()
       .subscribe((post: Post[]) => {
         this.isLoading = false;
@@ -29,7 +30,9 @@ export class PostListComponent implements OnInit, OnDestroy {
       });
     }
     onChangePage(pageData: PageEvent){
-      console.log(pageData);
+      this.currentPage = pageData.pageIndex + 1;
+      this.postsPerPage = pageData.pageSize;
+      this.postService.getPosts(this.postsPerPage,this.currentPage);
     }
     onDelete(postId: string) {
         this.postService.deletePost(postId);
