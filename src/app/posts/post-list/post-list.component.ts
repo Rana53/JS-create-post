@@ -12,7 +12,7 @@ import { PageEvent } from '@angular/material';
 export class PostListComponent implements OnInit, OnDestroy {
     posts: Post [] = [];
     isLoading = false;
-    totalPosts = 10;
+    totalPosts = 0;
     postsPerPage = 2;
     currentPage = 1;
     pageSizeOptions = [1, 2, 5, 10];
@@ -23,19 +23,23 @@ export class PostListComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       this.postService.getPosts(this.postsPerPage,1);
       this.postsSub = this.postService.getPostUpdateListener()
-      .subscribe((post: Post[]) => {
+      .subscribe((postData: {posts:Post[], postCount: number}) => {
         this.isLoading = false;
-        this.posts = post;
+        this.totalPosts = postData.postCount;
+        this.posts = postData.posts;
         // console.log("post image path ");
       });
     }
     onChangePage(pageData: PageEvent){
+      this.isLoading = true;
       this.currentPage = pageData.pageIndex + 1;
       this.postsPerPage = pageData.pageSize;
       this.postService.getPosts(this.postsPerPage,this.currentPage);
     }
     onDelete(postId: string) {
-        this.postService.deletePost(postId);
+        this.postService.deletePost(postId).subscribe(() => {
+          this.postService.getPosts(this.postsPerPage,this.currentPage);
+        });
     }
 
     ngOnDestroy() {

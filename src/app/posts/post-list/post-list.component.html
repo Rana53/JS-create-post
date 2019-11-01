@@ -19,11 +19,11 @@
                 <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
             </mat-action-row>
         </mat-expansion-panel>
+        <mat-paginator [length]="totalPosts"
+           [pageSize]="postsPerPage"
+           [pageSizeOptions]="pageSizeOptions"
+           (page)="onChangePage($event)">
+        </mat-paginator>
     </mat-accordion>
-    <mat-paginator [length]="totalPosts"
-      [pageSize]="postsPerPage"
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="onChangePage($event)">
-    </mat-paginator>
-    <h3 class="info-text-mat-body-1" *ngIf="posts.length < 1"> not post added yet</h3>
 </mat-accordion>
+<h3 class="info-text-mat-body-1" *ngIf="posts.length < 1"> not post added yet</h3>

@@ -53,15 +53,21 @@ router.get("", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const pageQuery = Post.find();
+  let fatchedPosts;
   if (pageSize && currentPage){
     pageQuery
     .skip(pageSize * (currentPage - 1))
     .limit(pageSize);
   }
-  pageQuery.then((doc) =>{
+  pageQuery.then(document => {
+    fatchedPosts = document;
+    return Post.count();
+  })
+  .then(count => {
     res.status(200).json({
       message: 'Post fatched successfully',
-      posts: doc
+      posts: fatchedPosts,
+      maxPosts: count
     });
   })
   .catch(()=>{
@@ -79,6 +85,7 @@ router.get("/:id", (req, res, next) => {
       res.status(500).json({ message: "Post not found"});
     }
   });
+
 });
 router.put(
   "/:postId", 
