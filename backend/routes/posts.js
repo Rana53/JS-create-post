@@ -25,13 +25,13 @@ const storage = multer.diskStorage({
     cb(null, name + '-' + Date.now()+'.' + ext);
   }
 });
-router.post("",multer({storage}).single('image'), (req, res, next) => {
+router.post("",  multer({storage}).single('image'), (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
   const post = new Post({
       title: req.body.title,
       content: req.body.content,
       imagePath: url + "/images/" + req.file.filename
-  });
+  }); 
   post.save().then(createdPost => {
       console.log("create post " + createdPost);
       res.status(201).json({
@@ -73,17 +73,25 @@ router.get("/:id", (req, res, next) => {
     }
   });
 });
-router.put("/:postId", (req, res, next) => {
-  const id = req.params.postId;
-  const post = new Post({
+router.put(
+  "/:postId", 
+  multer({storage}).single('image'), 
+  (req, res, next) => {
+    const id = req.params.postId;
+    let imagePath = req.body.imagePath;
+    if (req.file) {
+      const url = req.protocol + "://" + req.get("host");
+    }
+    const post = new Post({
       _id: id,
       title: req.body.title,
-      content: req.body.content
-  });
-  console.log(id);
-  Post.updateOne({ _id : id},post).then(result =>{
+      content: req.body.content,
+      imagePath: imagePath  
+    });
+    console.log(id);
+    Post.updateOne({ _id : id},post).then(result =>{
       res.status(201).json({ message: "post update successfully" });
-  })
+    })
 });
 
 router.delete("/:postId", (req, res, next) => {
