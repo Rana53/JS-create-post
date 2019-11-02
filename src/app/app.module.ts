@@ -19,7 +19,7 @@ import {
   MatCardModule,
   MatButtonModule,
   MatInputModule,
-  MatPaginatorModule
+  MatPaginatorModule,
 } from '@angular/material';
 
 @NgModule({
@@ -42,6 +42,7 @@ import {
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+  
     HttpClientModule
   ],
   providers: [PostService],

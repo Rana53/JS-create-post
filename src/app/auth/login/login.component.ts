@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-login',
@@ -6,4 +7,14 @@ import { Component } from '@angular/core';
     styleUrls: ['./login.component.css']
 
 })
-export class LoginComponent { }
+export class LoginComponent {
+  form: FormGroup = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl('')
+  });
+  submit(){
+    if(this.form.valid){
+      console.log('From valid ' + this.form.value.password);
+    }
+  }
+ }
