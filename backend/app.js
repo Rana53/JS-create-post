@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const postRouter = require('./routes/posts');
+const userRouter = require('./routes/user');
 
 const mongoose = require('mongoose');
 const url = 'mongodb+srv://tyro:tyro@cluster0-zqcah.mongodb.net/node-js-post?retryWrites=true&w=majority';
@@ -33,5 +34,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/posts", postRouter);
+app.use("/api/posts", userRouter);
 
 module.exports = app;
