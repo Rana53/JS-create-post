@@ -6,10 +6,11 @@ const postRouter = require('./routes/posts');
 const userRouter = require('./routes/user');
 
 const mongoose = require('mongoose');
-const url = 'mongodb+srv://tyro:tyro@cluster0-zqcah.mongodb.net/node-js-post?retryWrites=true&w=majority';
+const url = 'mongodb+srv://tyro:tyro@cluster0-zqcah.mongodb.net/node-js-post';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use("/images", express.static(path.join("backend/images")));
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true})

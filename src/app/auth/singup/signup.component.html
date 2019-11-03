@@ -1,24 +1,20 @@
 <mat-card>
-  <mat-card-title>Sigin Up</mat-card-title>
-<mat-card-content>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <input type="text" matInput placeholder="Username" formControlName="username">
+    <mat-card-title>SignUp</mat-card-title>
+  <mat-card-content>
+    
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input type="text" matInput placeholder="Email" formControlName="exmail" required>
+      <mat-error *ngIf="form.get('exmail').invalid">Please enter a valid email</mat-error>
     </mat-form-field>
-  <p>
     <mat-form-field>
       <input type="password" matInput placeholder="Password" formControlName="password">
+      <mat-error *ngIf="form.get('password').invalid">Please enter a valid password</mat-error>
     </mat-form-field>
-  </p>
-
-  <p *ngIf="error" class="error">
-    {{ error }}
-  </p>
-
-  <div class="button">
-    <button type="submit" mat-button>Login</button>
-  </div>
-
-</form>
-</mat-card-content>
-</mat-card>
+    <div class="button">
+      <button type="submit" mat-button>Login</button>
+    </div>
+  </form>
+  
+  </mat-card-content>
+  </mat-card>

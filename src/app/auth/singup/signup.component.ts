@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
     selector: 'app-signup',
@@ -8,13 +9,16 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 })
 export class SignupComponent {
+  constructor(private authService: AuthService) { }
   form: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
+    exmail: new FormControl('', {validators: [Validators.required]}),
+    password: new FormControl('', {validators: [Validators.required]})
   });
   onSubmit(){
-    if(this.form.valid){
-      console.log(this.form.value.username + ' password ' + this.form.value.password);
+    if(!this.form.valid){
+      return;
     }
+    console.log('sing up component work');
+    this.authService.createUser(this.form.value.exmail, this.form.value.password);
   }
  }

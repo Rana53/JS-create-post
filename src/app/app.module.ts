@@ -11,6 +11,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { PostService } from './posts/post.service';
 import { SignupComponent } from './auth/singup/signup.component';
+import { AuthService } from './auth/auth.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { 
@@ -48,7 +49,7 @@ import {
   
     HttpClientModule
   ],
-  providers: [PostService],
+  providers: [PostService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
