@@ -10,6 +10,7 @@ import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { PostService } from './posts/post.service';
+import { SignupComponent } from './auth/singup/signup.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { 
@@ -22,13 +23,15 @@ import {
   MatPaginatorModule,
 } from '@angular/material';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     PostCreateComponent,
     PostListComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
