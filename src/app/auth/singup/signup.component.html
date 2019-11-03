@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>Sigin Up</mat-card-title>
 <mat-card-content>
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <input type="text" matInput placeholder="Username" formControlName="username">
     </mat-form-field>
