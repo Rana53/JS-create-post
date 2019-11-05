@@ -64,6 +64,7 @@ router.get("", (req, res, next) => {
     return Post.count();
   })
   .then(count => {
+    //console.log("count " + count);
     res.status(200).json({
       message: 'Post fatched successfully',
       posts: fatchedPosts,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
     selector: 'app-login',
@@ -8,14 +9,17 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 })
 export class LoginComponent {
+  constructor(private authService: AuthService) { }
+
   form: FormGroup = new FormGroup({
     username: new FormControl('', {validators: [Validators.required]}),
     password: new FormControl('', {validators: [Validators.required]})
   });
   onSubmit(){
-    if(this.form.valid){
-      console.log('From valid ' + this.form.value.password);
+    if(!this.form.valid){
+      return;
     }
+    this.authService.userLogin(this.form.value.username, this.form.value.password);
   }
   
  }

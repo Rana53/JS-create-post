@@ -19,11 +19,38 @@ router.post("/signup", (req, res, next) => {
           });
         })
         .catch(err => {
+            console.log('wrong ' + err);
             res.status(500).json({
                 error: err
             })
         });
       });
 
+});
+
+router.post("/login", (req, res, next) => {
+  User
+    .findOne({email: req.body.email})
+    .then(user => {
+      if(!user){
+        return res.status(401).json({
+          message: 'Auth Fail'
+        })
+      }
+      return bcrypt.compare(req.body.password,user.password);
+    })
+    .then(result => {
+      if(!result){
+        return res.status(401).json({
+          message: 'Auth Fail'
+        })
+      }
+      
+    })  
+    .catch(err => {
+      return res.status(401).json({
+        message: 'Auth Fail'
+      })
+    });
 });
 module.exports = router;
