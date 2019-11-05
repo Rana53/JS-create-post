@@ -31,7 +31,7 @@ router.post("/signup", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
-  console.log("email " + req.body.email + " pass " + req.body.password);
+ // console.log("email " + req.body.email + " pass " + req.body.password);
   let fatchUser;
   User
     .findOne({email: req.body.email})
@@ -50,19 +50,19 @@ router.post("/login", (req, res, next) => {
           message: 'Auth Fail'
         })
       }
-      console.log("-> " + fatchUser +" <-");
+      //console.log("-> " + fatchUser +" <-");
       const token = jwt.sign(
         { email: fatchUser.email, userId: fatchUser._id},
         "secret_key_should_be_longer",
         { expiresIn: "1h"}
       );
-      console.log("Token " + token);
+     // console.log("Token " + token);
       res.status(200).json({
         token: token
       });
     })  
     .catch(err => {
-      console.log(":(");
+     // console.log(":(");
       return res.status(401).json({
         message: 'Auth Fail'
       })
