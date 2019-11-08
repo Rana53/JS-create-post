@@ -17,9 +17,11 @@ export class LoginComponent {
   });
   onSubmit(){
     if(!this.form.valid){
+      this.form.reset()
       return;
     }
     this.authService.userLogin(this.form.value.username, this.form.value.password);
+    
   }
   
  }

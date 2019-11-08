@@ -20,5 +20,6 @@ export class SignupComponent {
     }
     console.log('sing up component work');
     this.authService.createUser(this.form.value.exmail, this.form.value.password);
+    this.form.reset()
   }
  }

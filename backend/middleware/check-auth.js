@@ -4,7 +4,8 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     jwt.verify(token, "secret_key_should_be_longer");
     next();
-  } catch(error){
-    res.status.json({ message: "Auth failed!"});
+  } catch(error){  
+    console.log("AuthError");
+    res.status(401).json({ message: "Auth failed!"});
   }
 };

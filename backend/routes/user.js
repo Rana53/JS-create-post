@@ -31,40 +31,36 @@ router.post("/signup", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
- // console.log("email " + req.body.email + " pass " + req.body.password);
-  let fatchUser;
+  let fetchUser;
   User
     .findOne({email: req.body.email})
     .then(user => {
       if(!user){
-        return res.status(401).json({
-          message: 'Auth Fail'
-        })
+        //console.log('user not found');
+        throw new Error("User profile not found");
       }
-      fatchUser = user;
+      fetchUser = user;
       return bcrypt.compare(req.body.password,user.password);
     })
     .then(result => {
+      //console.log("Result " + result);
       if(!result){
-        return res.status(401).json({
-          message: 'Auth Fail'
-        })
+        throw new Error("Password not match with user")
       }
-      //console.log("-> " + fatchUser +" <-");
       const token = jwt.sign(
-        { email: fatchUser.email, userId: fatchUser._id},
+        { email: fetchUser.email, userId: fetchUser._id},
         "secret_key_should_be_longer",
         { expiresIn: "1h"}
       );
-     // console.log("Token " + token);
+      //console.log("successfully log in");
       res.status(200).json({
         token: token
       });
-    })  
+    })
     .catch(err => {
-     // console.log(":(");
-      return res.status(401).json({
-        message: 'Auth Fail'
+      console.log("error occure !! " + err);
+      res.status(401).json({
+        message: err
       })
     });
 });

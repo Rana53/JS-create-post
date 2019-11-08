@@ -1,8 +1,10 @@
 const express = require('express');
 const multer = require('multer');
-const router = express.Router();
 const Post = require('../models/post');
 const checkAuth = require('../middleware/check-auth');
+
+const router = express.Router();
+
 const MIME_TYPE_MAP = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
@@ -61,7 +63,7 @@ router.get("", (req, res, next) => {
   }
   pageQuery.then(document => {
     fatchedPosts = document;
-    return Post.count();
+    return Post.countDocuments(); // count function deprecated
   })
   .then(count => {
     //console.log("count " + count);
@@ -90,6 +92,7 @@ router.get("/:id", (req, res, next) => {
 });
 router.put(
   "/:postId", 
+  checkAuth,
   multer({storage}).single('image'), 
   (req, res, next) => {
     const id = req.params.postId;
@@ -109,7 +112,7 @@ router.put(
     })
 });
 
-router.delete("/:postId", (req, res, next) => {
+router.delete("/:postId",checkAuth, (req, res, next) => {
   const id = req.params.postId;
   console.log(id);
   Post.deleteOne({_id: id})
