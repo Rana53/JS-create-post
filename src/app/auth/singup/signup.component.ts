@@ -9,7 +9,10 @@ import { AuthService } from '../auth.service';
 
 })
 export class SignupComponent {
+  isLoading = false;
+
   constructor(private authService: AuthService) { }
+  
   form: FormGroup = new FormGroup({
     exmail: new FormControl('', {validators: [Validators.required]}),
     password: new FormControl('', {validators: [Validators.required]})
@@ -18,7 +21,7 @@ export class SignupComponent {
     if(!this.form.valid){
       return;
     }
-    console.log('sing up component work');
+    this.isLoading = true;
     this.authService.createUser(this.form.value.exmail, this.form.value.password);
     this.form.reset()
   }

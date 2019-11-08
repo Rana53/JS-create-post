@@ -9,6 +9,8 @@ import { AuthService } from '../auth.service';
 
 })
 export class LoginComponent {
+  isLoading = false;
+
   constructor(private authService: AuthService) { }
 
   form: FormGroup = new FormGroup({
@@ -20,8 +22,9 @@ export class LoginComponent {
       this.form.reset()
       return;
     }
+    this.isLoading = true;
     this.authService.userLogin(this.form.value.username, this.form.value.password);
-    
+    this.form.reset();
   }
   
  }

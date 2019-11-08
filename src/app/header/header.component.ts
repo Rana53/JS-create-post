@@ -9,6 +9,7 @@ import { AuthService } from '../auth/auth.service';
 })
 
 export class HeaderComponent implements OnInit, OnDestroy{
+  onLoading = false;
   private authListenerSubs: Subscription;
   userIsAunthenticated = false;
   constructor(private authService: AuthService) {}
@@ -21,6 +22,12 @@ export class HeaderComponent implements OnInit, OnDestroy{
       });
   }
 
+  onLogout(){
+    this.onLoading = true;
+    this.userIsAunthenticated = false;
+    this.authService.logout();
+    this.onLoading = false;
+  }
   ngOnDestroy() {
     this.authListenerSubs.unsubscribe();
   }
