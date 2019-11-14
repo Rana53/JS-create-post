@@ -36,13 +36,15 @@ export class PostService {
                       title: post.title,
                       content: post.content,
                       id: post._id,
-                      imagePath: post.imagePath
+                      imagePath: post.imagePath,
+                      creator: post.creator
                   };
               }), 
               maxPosts: postData.maxPosts
             };
           }))
           .subscribe((transformedPosData) => {
+              console.log(transformedPosData);
               this.allPosts = transformedPosData.posts;
               this.postUpdated.next({
                 posts:  [...this.allPosts],
