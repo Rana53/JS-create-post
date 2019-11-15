@@ -12,4 +12,4 @@ module.exports = (req, res, next) => {
     console.log("AuthError");
     res.status(401).json({ message: "Auth failed!"});
   }
-};
+};  

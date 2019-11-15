@@ -44,7 +44,7 @@ export class PostService {
             };
           }))
           .subscribe((transformedPosData) => {
-              console.log(transformedPosData);
+              
               this.allPosts = transformedPosData.posts;
               this.postUpdated.next({
                 posts:  [...this.allPosts],

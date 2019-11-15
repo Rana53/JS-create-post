@@ -25,6 +25,6 @@ export class LoginComponent {
     this.isLoading = true;
     this.authService.userLogin(this.form.value.username, this.form.value.password);
     this.form.reset();
-  }
+  } 
   
  }
