@@ -103,10 +103,11 @@ router.put(
       const url = req.protocol + "://" + req.get("host");
     }
     const post = new Post({
-      _id: id,
+      _id: id,   
       title: req.body.title,
       content: req.body.content,
-      imagePath: imagePath  
+      imagePath: imagePath,
+      creator: req.userData.userId
     });
     Post.updateOne({ _id : id, creator: req.userData.userId},post)
       .then(result =>{

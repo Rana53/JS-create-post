@@ -13,14 +13,14 @@
             </div>
             <mat-action-row>
                 <a 
-                  *ngIf="isUseLogin"
+                  *ngIf="isUseLogin && userId === post.creator"
                   mat-button 
                   color="primary" 
                   [routerLink]="['/edit',post.id]" 
                   >EDIT
                 </a>
                 <button 
-                  *ngIf="isUseLogin"
+                  *ngIf="isUseLogin && userId === post.creator"
                   mat-button 
                   color="warn" 
                   (click)="onDelete(post.id)"
